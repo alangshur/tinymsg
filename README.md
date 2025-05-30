@@ -1,6 +1,6 @@
 # tinymsg
 
-A lightweight serialization library for Python using MessagePack with type-safe Pydantic models.
+A lightweight serialization library for Python using MessagePack with type-safe Pydantic models. This Python instance of the tinymsg serialization library is directly compatible with tinymsg-cpp and tinymsg-rs (both coming soon).
 
 ## Features
 
