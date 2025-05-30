@@ -30,7 +30,7 @@ testpaths = ["tests"]
 addopts = ["--verbose"]
 
 [tool.ruff]
-line-length = 88
+line-length = 100
 target-version = "py38"
 
 [tool.ruff.lint]

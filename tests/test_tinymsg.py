@@ -1,7 +1,3 @@
-"""
-Test suite for tinymsg library.
-"""
-
 from typing import Any, Dict, List, Optional
 
 import pytest
@@ -83,9 +79,7 @@ class TestBasicSerialization:
 
     def test_override_defaults(self):
         """Test serialization when overriding default values."""
-        original = DefaultFieldsMessage(
-            name="test", count=5, enabled=False, items=["a", "b"]
-        )
+        original = DefaultFieldsMessage(name="test", count=5, enabled=False, items=["a", "b"])
         packed = original.pack()
         unpacked = DefaultFieldsMessage.unpack(packed)
 
@@ -124,9 +118,7 @@ class TestNestedSerialization:
             "stats": {"count": 2, "active": 1},
         }
 
-        complex_msg = ComplexMessage(
-            users=users, metadata=metadata, config={"debug": True}
-        )
+        complex_msg = ComplexMessage(users=users, metadata=metadata, config={"debug": True})
 
         packed = complex_msg.pack()
         unpacked = ComplexMessage.unpack(packed)
@@ -210,8 +202,7 @@ class TestPerformance:
     def test_large_list_serialization(self):
         """Test serialization with large lists."""
         users = [
-            SimpleMessage(name=f"user_{i}", age=20 + i % 50, active=i % 2 == 0)
-            for i in range(1000)
+            SimpleMessage(name=f"user_{i}", age=20 + i % 50, active=i % 2 == 0) for i in range(1000)
         ]
 
         msg = ComplexMessage(users=users, metadata={"count": 1000})
@@ -227,11 +218,7 @@ class TestPerformance:
         # Create nested structure: metadata with nested dicts
         metadata = {
             "level1": {
-                "level2": {
-                    "level3": {
-                        "level4": {"data": "deep_value", "numbers": [1, 2, 3, 4, 5]}
-                    }
-                }
+                "level2": {"level3": {"level4": {"data": "deep_value", "numbers": [1, 2, 3, 4, 5]}}}
             }
         }
 
@@ -239,10 +226,7 @@ class TestPerformance:
         packed = msg.pack()
         unpacked = ComplexMessage.unpack(packed)
 
-        assert (
-            unpacked.metadata["level1"]["level2"]["level3"]["level4"]["data"]
-            == "deep_value"
-        )
+        assert unpacked.metadata["level1"]["level2"]["level3"]["level4"]["data"] == "deep_value"
 
 
 class TestEquality:
