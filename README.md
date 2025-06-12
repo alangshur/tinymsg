@@ -50,49 +50,34 @@ print(restored_team.members[0].name)  # "Alice"
 
 ## Development
 
-### Recommended Workflow (using uv)
-
-[uv](https://github.com/astral-sh/uv) is a fast Python package manager and virtualenv manager. Install it first:
+This project uses [uv](https://github.com/astral-sh/uv), a fast Python package and project manager. Install it first:
 
 ```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-#### Setup Development Environment
+### Setup Development Environment
+
+Automatically create the virtual environment and sync all the dependencies (including dev dependencies): 
 
 ```bash
-# Create virtual environment and install all dependencies (including dev dependencies)
-uv sync --extra dev
-
-# Alternative: Create venv manually then install
-uv venv
-source .venv/bin/activate
-uv pip install -e ".[dev]"
+uv sync --group dev
 ```
 
-#### Development Commands
+### Development Commands
 
 ```bash
 # Run tests
 uv run pytest
-
-# Run tests with coverage report
 uv run pytest --cov=tinymsg --cov-report=html
 
-# Run specific test
-uv run pytest tests/test_tinymsg.py::TestBasicSerialization::test_simple_message_roundtrip
-
-# Check code with ruff (linting)
+# Lint and format code with ruff
 uv run ruff check .
-
-# Auto-fix linting issues
 uv run ruff check --fix .
-
-# Format code with ruff
 uv run ruff format .
 ```
 
-#### Other Useful Commands
+### Other Useful Commands
 
 ```bash
 # Add a new dependency
@@ -104,24 +89,6 @@ uv add --dev mypy
 # Update dependencies
 uv sync
 
-# Show installed packages
-uv pip list
-```
-
-### Traditional Workflow (using pip)
-
-```bash
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate
-
-# Install dependencies
-pip install -e ".[dev]"
-
-# Run tests
-pytest
-
-# Lint and format code
-ruff check .
-ruff format .
+# Show dependencies
+uv tree
 ```
