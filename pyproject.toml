@@ -27,11 +27,8 @@ line-length = 100
 target-version = "py313"
 
 [tool.ruff.lint]
-select = ["ALL"]
+select = ["E", "F", "I"]
 fixable = ["ALL"]
-
-[tool.ruff.lint.pydocstyle]
-convention = "numpy"
 
 [dependency-groups]
 dev = [

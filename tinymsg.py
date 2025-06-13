@@ -1,11 +1,3 @@
-"""
-tinymsg.py - a lightweight serialization library for Python.
-
-tinymsg provides a lightweight, type-safe interface for serializing and
-deserializing Python objects using MessagePack as the underlying format.
-It focuses on performance with minimal boilerplate.
-"""
-
 from typing import ClassVar, TypeVar
 
 import msgpack
@@ -35,6 +27,7 @@ class Message(BaseModel):
 
         :return: A MessagePack byte string.
         """
+
         payload = self.model_dump(mode="python", by_alias=True)
         return msgpack.packb(payload, use_bin_type=True)
 
@@ -46,5 +39,6 @@ class Message(BaseModel):
         :param data: The bytes to deserialize.
         :return: The deserialized object.
         """
+
         obj = msgpack.unpackb(data, raw=False)
         return cls.model_validate(obj)
