@@ -14,12 +14,11 @@ from pydantic import BaseModel
 
 class Message(BaseModel):
     """
-    Base class for user-defined message types supporting serialization
-    and deserialization.
+    Base class for user-defined message types supporting serialization and deserialization.
 
-    Sub-class this with regular Pydantic field definitions — no extra
-    boilerplate is required. Nested `Message` (or any `BaseModel`) types,
-    lists, dicts, and built-ins are handled automatically.
+    Sub-class this with regular Pydantic field definitions — no extra boilerplate is required.
+    Nested `Message` (or any `BaseModel`) types, lists, dicts, and built-ins are handled
+    automatically.
     """
 
     M: ClassVar = TypeVar("M", bound="Message")
@@ -36,7 +35,6 @@ class Message(BaseModel):
 
         :return: A MessagePack byte string.
         """
-
         payload = self.model_dump(mode="python", by_alias=True)
         return msgpack.packb(payload, use_bin_type=True)
 
@@ -48,6 +46,5 @@ class Message(BaseModel):
         :param data: The bytes to deserialize.
         :return: The deserialized object.
         """
-
         obj = msgpack.unpackb(data, raw=False)
         return cls.model_validate(obj)
