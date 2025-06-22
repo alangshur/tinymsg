@@ -1,7 +1,7 @@
+from typing import Self
+
 import msgpack
 from pydantic import BaseModel
-
-# M = TypeVar("M", bound="Message")
 
 
 class Message(BaseModel):
@@ -19,7 +19,7 @@ class Message(BaseModel):
         "arbitrary_types_allowed": True,
     }
 
-    def pack(self: "Message") -> bytes:
+    def pack(self: Self) -> bytes:
         """
         Serialize to a MessagePack byte string.
 
@@ -30,7 +30,7 @@ class Message(BaseModel):
         return msgpack.packb(payload, use_bin_type=True)
 
     @classmethod
-    def unpack(cls: type["Message"], data: bytes) -> "Message":
+    def unpack(cls: type[Self], data: bytes) -> Self:
         """
         Deserialize from bytes produced by :py:meth:`pack`.
 

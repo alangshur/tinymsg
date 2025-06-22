@@ -1,8 +1,6 @@
-from typing import TypeVar
+from typing import Self
 
 from pydantic import BaseModel
-
-M = TypeVar("M", bound="Message")
 
 class Message(BaseModel):
     """
@@ -13,7 +11,7 @@ class Message(BaseModel):
     automatically.
     """
 
-    def pack(self: M) -> bytes:
+    def pack(self: Self) -> bytes:
         """
         Serialize to a MessagePack byte string.
 
@@ -22,7 +20,7 @@ class Message(BaseModel):
         ...
 
     @classmethod
-    def unpack(cls: type[M], data: bytes) -> M:
+    def unpack(cls: type[Self], data: bytes) -> Self:
         """
         Deserialize from bytes produced by :py:meth:`pack`.
 
