@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "tinymsg"
-version = "0.1.1"
+version = "0.1.2"
 description = "A lightweight serialization library for Python using MessagePack with type-safe Pydantic models"
 readme = "README.md"
 license = {text = "MIT"}

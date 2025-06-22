@@ -98,8 +98,11 @@ uv add requests
 # Add a new dev dependency
 uv add --dev mypy
 
-# Update dependencies
+# Sync dependencies
 uv sync
+
+# Sync and upgrade dependencies
+uv sync --upgrade
 
 # Show dependencies
 uv tree
