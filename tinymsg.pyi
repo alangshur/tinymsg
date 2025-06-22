@@ -1,10 +1,8 @@
 from typing import TypeVar
 
-import msgpack
 from pydantic import BaseModel
 
 M = TypeVar("M", bound="Message")
-
 
 class Message(BaseModel):
     """
@@ -15,21 +13,13 @@ class Message(BaseModel):
     automatically.
     """
 
-    model_config = {
-        "extra": "forbid",
-        "frozen": False,
-        "arbitrary_types_allowed": True,
-    }
-
     def pack(self: M) -> bytes:
         """
         Serialize to a MessagePack byte string.
 
         :return: A MessagePack byte string.
         """
-
-        payload = self.model_dump(mode="python", by_alias=True)
-        return msgpack.packb(payload, use_bin_type=True)
+        ...
 
     @classmethod
     def unpack(cls: type[M], data: bytes) -> M:
@@ -39,6 +29,4 @@ class Message(BaseModel):
         :param data: The bytes to deserialize.
         :return: The deserialized object.
         """
-
-        obj = msgpack.unpackb(data, raw=False)
-        return cls.model_validate(obj)
+        ...

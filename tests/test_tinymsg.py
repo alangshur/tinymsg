@@ -47,7 +47,7 @@ class DefaultFieldsMessage(Message):
 class TestBasicSerialization:
     """Test basic pack/unpack functionality."""
 
-    def test_simple_message_roundtrip(self):
+    def test_simple_message_roundtrip(self) -> None:
         """Test basic serialization and deserialization."""
         original = SimpleMessage(name="Alice", age=30, active=True)
         packed = original.pack()
@@ -58,7 +58,7 @@ class TestBasicSerialization:
         assert unpacked.active is True
         assert unpacked == original
 
-    def test_empty_message(self):
+    def test_empty_message(self) -> None:
         """Test serialization of message with no fields."""
         original = EmptyMessage()
         packed = original.pack()
@@ -66,7 +66,7 @@ class TestBasicSerialization:
 
         assert unpacked == original
 
-    def test_message_with_defaults(self):
+    def test_message_with_defaults(self) -> None:
         """Test serialization with default field values."""
         original = DefaultFieldsMessage(name="test")
         packed = original.pack()
@@ -77,7 +77,7 @@ class TestBasicSerialization:
         assert unpacked.enabled is True
         assert unpacked.items == []
 
-    def test_override_defaults(self):
+    def test_override_defaults(self) -> None:
         """Test serialization when overriding default values."""
         original = DefaultFieldsMessage(name="test", count=5, enabled=False, items=["a", "b"])
         packed = original.pack()
@@ -92,7 +92,7 @@ class TestBasicSerialization:
 class TestNestedSerialization:
     """Test serialization with nested objects."""
 
-    def test_nested_message(self):
+    def test_nested_message(self) -> None:
         """Test serialization with nested Message objects."""
         simple = SimpleMessage(name="Bob", age=25, active=False)
         nested = NestedMessage(id=123, data=simple, tags=["tag1", "tag2"])
@@ -106,7 +106,7 @@ class TestNestedSerialization:
         assert unpacked.data.active is False
         assert unpacked.tags == ["tag1", "tag2"]
 
-    def test_complex_nested_structure(self):
+    def test_complex_nested_structure(self) -> None:
         """Test serialization with lists of objects and complex structures."""
         users = [
             SimpleMessage(name="Alice", age=30, active=True),
@@ -134,7 +134,7 @@ class TestNestedSerialization:
 class TestDataTypes:
     """Test various data types and edge cases."""
 
-    def test_unicode_strings(self):
+    def test_unicode_strings(self) -> None:
         """Test serialization with unicode strings."""
         msg = SimpleMessage(name="José María", age=30, active=True)
         packed = msg.pack()
@@ -142,7 +142,7 @@ class TestDataTypes:
 
         assert unpacked.name == "José María"
 
-    def test_large_numbers(self):
+    def test_large_numbers(self) -> None:
         """Test serialization with large numbers."""
         msg = SimpleMessage(name="test", age=2147483647, active=True)
         packed = msg.pack()
@@ -150,7 +150,7 @@ class TestDataTypes:
 
         assert unpacked.age == 2147483647
 
-    def test_empty_collections(self):
+    def test_empty_collections(self) -> None:
         """Test serialization with empty lists and dicts."""
         msg = ComplexMessage(users=[], metadata={})
         packed = msg.pack()
@@ -159,7 +159,7 @@ class TestDataTypes:
         assert unpacked.users == []
         assert unpacked.metadata == {}
 
-    def test_none_values(self):
+    def test_none_values(self) -> None:
         """Test serialization with None values in optional fields."""
         msg = ComplexMessage(users=[], metadata={}, config=None)
         packed = msg.pack()
@@ -171,22 +171,22 @@ class TestDataTypes:
 class TestErrorHandling:
     """Test error handling and validation."""
 
-    def test_invalid_data_type(self):
+    def test_invalid_data_type(self) -> None:
         """Test that invalid data raises ValidationError."""
         with pytest.raises(Exception):  # Pydantic ValidationError
             SimpleMessage(name="test", age="not_a_number", active=True)
 
-    def test_missing_required_field(self):
+    def test_missing_required_field(self) -> None:
         """Test that missing required fields raise ValidationError."""
         with pytest.raises(Exception):  # Pydantic ValidationError
             SimpleMessage(age=30, active=True)  # missing name
 
-    def test_corrupted_data_unpacking(self):
+    def test_corrupted_data_unpacking(self) -> None:
         """Test that corrupted data raises appropriate error."""
         with pytest.raises(Exception):  # msgpack or validation error
             SimpleMessage.unpack(b"corrupted_data")
 
-    def test_wrong_message_type_unpacking(self):
+    def test_wrong_message_type_unpacking(self) -> None:
         """Test unpacking with wrong message type."""
         simple = SimpleMessage(name="test", age=30, active=True)
         packed = simple.pack()
@@ -199,7 +199,7 @@ class TestErrorHandling:
 class TestPerformance:
     """Basic performance and stress tests."""
 
-    def test_large_list_serialization(self):
+    def test_large_list_serialization(self) -> None:
         """Test serialization with large lists."""
         users = [
             SimpleMessage(name=f"user_{i}", age=20 + i % 50, active=i % 2 == 0) for i in range(1000)
@@ -213,7 +213,7 @@ class TestPerformance:
         assert unpacked.users[0].name == "user_0"
         assert unpacked.users[999].name == "user_999"
 
-    def test_deep_nesting(self):
+    def test_deep_nesting(self) -> None:
         """Test with deeply nested structures."""
         # Create nested structure: metadata with nested dicts
         metadata = {
@@ -232,7 +232,7 @@ class TestPerformance:
 class TestEquality:
     """Test object equality after serialization."""
 
-    def test_message_equality(self):
+    def test_message_equality(self) -> None:
         """Test that messages are equal after round-trip serialization."""
         msg1 = SimpleMessage(name="test", age=30, active=True)
         msg2 = SimpleMessage(name="test", age=30, active=True)
@@ -245,7 +245,7 @@ class TestEquality:
         assert msg1 == unpacked
         assert msg2 == unpacked
 
-    def test_complex_message_equality(self):
+    def test_complex_message_equality(self) -> None:
         """Test equality with complex nested structures."""
         users = [SimpleMessage(name="Alice", age=30, active=True)]
         msg1 = ComplexMessage(users=users, metadata={"test": True})

@@ -64,6 +64,12 @@ Automatically create the virtual environment and sync all the dependencies (incl
 uv sync --group dev
 ```
 
+Install the pre-commit hooks to auto-run linting, formatting, and static type checks:
+
+```bash
+uv run pre-commit install
+```
+
 ### Development Commands
 
 ```bash
@@ -71,10 +77,16 @@ uv sync --group dev
 uv run pytest
 uv run pytest --cov=tinymsg --cov-report=html
 
-# Lint and format code with ruff
+# Lint and format code with ruff (runs automatically with pre-commit)
 uv run ruff check .
 uv run ruff check --fix .
 uv run ruff format .
+
+# Type checking (runs automatically with pre-commit)
+uv run mypy .
+
+# Run all pre-commit hooks manually (includes ruff, mypy, and uv-lock)
+uv run pre-commit run --all-files
 ```
 
 ### Other Useful Commands
